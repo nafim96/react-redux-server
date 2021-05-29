@@ -31,6 +31,10 @@ client.connect((err) => {
     .collection(`${process.env.DB_CL_ADMIN}`);
   console.log("get admin", adminCollection);
 
+  const checkoutCollection = client
+    .db(`${process.env.DB_DATA_BASE}`)
+    .collection(`${process.env.DB_CL_CHECKOUT}`);
+
   //create admin get admin and query admin area
   app.post("/addAdmin", (req, res) => {
     const name = req.body.name;
@@ -78,6 +82,14 @@ client.connect((err) => {
       .toArray((err, documents) => {
         res.send(documents[0]);
       });
+  });
+
+  //use checkout collection area
+  app.post("/checkout", (req, res) => {
+    const checkout = req.body;
+    checkoutCollection.insertOne(checkout).then((result) => {
+      res.send(result.insertedCount > 0);
+    });
   });
 
   //product delete method
