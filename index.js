@@ -72,7 +72,7 @@ client.connect((err) => {
   });
 
   // find product using id
-  app.get("/placeProduct/:id", (req, res) => {
+  app.get("/productById/:id", (req, res) => {
     productCollection
       .find({ _id: objectId(req.params.id) })
       .toArray((err, documents) => {
